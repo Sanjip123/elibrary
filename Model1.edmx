@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name=" order table">
+          <Key>
+            <PropertyRef Name="O_id" />
+          </Key>
+          <Property Name="O_id" Type="int" Nullable="false" />
+          <Property Name="O_date" Type="datetime" />
+          <Property Name="O_address" Type="varchar" MaxLength="50" />
+          <Property Name="O_phone" Type="varchar" MaxLength="50" />
+          <Property Name="O_total" Type="money" />
+          <Property Name="O_status" Type="varchar" MaxLength="50" />
+          <Property Name="U_id" Type="int" />
+        </EntityType>
+        <EntityType Name="categories table">
+          <Key>
+            <PropertyRef Name="Cat_id" />
+          </Key>
+          <Property Name="Cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cat_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="order details">
+          <Key>
+            <PropertyRef Name="details_id" />
+          </Key>
+          <Property Name="details_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="O_id" Type="int" Nullable="false" />
+          <Property Name="P_id" Type="int" Nullable="false" />
+          <Property Name="Order_qty" Type="int" Nullable="false" />
+          <Property Name="Order_price" Type="money" />
+          <Property Name="Order_total" Type="money" />
+        </EntityType>
+        <EntityType Name="product image">
+          <Key>
+            <PropertyRef Name="Img_id" />
+          </Key>
+          <Property Name="Img_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pro_id" Type="int" Nullable="false" />
+          <Property Name="Img_path" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="product table">
+          <Key>
+            <PropertyRef Name="Pro_id" />
+          </Key>
+          <Property Name="Pro_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pro_details" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pro_price" Type="money" Nullable="false" />
+          <Property Name="Pro_qty" Type="int" />
+          <Property Name="Pro_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cat_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="user table">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="user_address" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="user_password" Type="varchar" MaxLength="500" />
+          <Property Name="user_type" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ order table_user table">
+          <End Role="user table" Type="Self.user table" Multiplicity="0..1" />
+          <End Role=" order table" Type="Self. order table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user table">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role=" order table">
+              <PropertyRef Name="U_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order details_ order table">
+          <End Role=" order table" Type="Self. order table" Multiplicity="1" />
+          <End Role="order details" Type="Self.order details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role=" order table">
+              <PropertyRef Name="O_id" />
+            </Principal>
+            <Dependent Role="order details">
+              <PropertyRef Name="O_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order details_product table">
+          <End Role="product table" Type="Self.product table" Multiplicity="1" />
+          <End Role="order details" Type="Self.order details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product table">
+              <PropertyRef Name="Pro_id" />
+            </Principal>
+            <Dependent Role="order details">
+              <PropertyRef Name="P_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product image_product table">
+          <End Role="product table" Type="Self.product table" Multiplicity="1" />
+          <End Role="product image" Type="Self.product image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product table">
+              <PropertyRef Name="Pro_id" />
+            </Principal>
+            <Dependent Role="product image">
+              <PropertyRef Name="Pro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product table_categories table">
+          <End Role="categories table" Type="Self.categories table" Multiplicity="0..1" />
+          <End Role="product table" Type="Self.product table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories table">
+              <PropertyRef Name="Cat_id" />
+            </Principal>
+            <Dependent Role="product table">
+              <PropertyRef Name="Cat_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name=" order table" EntityType="Self. order table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categories table" EntityType="Self.categories table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order details" EntityType="Self.order details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product image" EntityType="Self.product image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product table" EntityType="Self.product table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user table" EntityType="Self.user table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ order table_user table" Association="Self.FK_ order table_user table">
+            <End Role="user table" EntitySet="user table" />
+            <End Role=" order table" EntitySet=" order table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order details_ order table" Association="Self.FK_order details_ order table">
+            <End Role=" order table" EntitySet=" order table" />
+            <End Role="order details" EntitySet="order details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order details_product table" Association="Self.FK_order details_product table">
+            <End Role="product table" EntitySet="product table" />
+            <End Role="order details" EntitySet="order details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product image_product table" Association="Self.FK_product image_product table">
+            <End Role="product table" EntitySet="product table" />
+            <End Role="product image" EntitySet="product image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product table_categories table" Association="Self.FK_product table_categories table">
+            <End Role="categories table" EntitySet="categories table" />
+            <End Role="product table" EntitySet="product table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C_order_table">
+          <Key>
+            <PropertyRef Name="O_id" />
+          </Key>
+          <Property Name="O_id" Type="Int32" Nullable="false" />
+          <Property Name="O_date" Type="DateTime" Precision="3" />
+          <Property Name="O_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="O_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="O_total" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="O_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="U_id" Type="Int32" />
+          <NavigationProperty Name="user_table" Relationship="Self.FK__order_table_user_table" FromRole="C_order_table" ToRole="user_table" />
+          <NavigationProperty Name="order_details" Relationship="Self.FK_order_details__order_table" FromRole="C_order_table" ToRole="order_details" />
+        </EntityType>
+        <EntityType Name="categories_table">
+          <Key>
+            <PropertyRef Name="Cat_id" />
+          </Key>
+          <Property Name="Cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cat_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="product_table" Relationship="Self.FK_product_table_categories_table" FromRole="categories_table" ToRole="product_table" />
+        </EntityType>
+        <EntityType Name="order_detail">
+          <Key>
+            <PropertyRef Name="details_id" />
+          </Key>
+          <Property Name="details_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="O_id" Type="Int32" Nullable="false" />
+          <Property Name="P_id" Type="Int32" Nullable="false" />
+          <Property Name="Order_qty" Type="Int32" Nullable="false" />
+          <Property Name="Order_price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Order_total" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="C_order_table" Relationship="Self.FK_order_details__order_table" FromRole="order_details" ToRole="C_order_table" />
+          <NavigationProperty Name="product_table" Relationship="Self.FK_order_details_product_table" FromRole="order_details" ToRole="product_table" />
+        </EntityType>
+        <EntityType Name="product_image">
+          <Key>
+            <PropertyRef Name="Img_id" />
+          </Key>
+          <Property Name="Img_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pro_id" Type="Int32" Nullable="false" />
+          <Property Name="Img_path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="product_table" Relationship="Self.FK_product_image_product_table" FromRole="product_image" ToRole="product_table" />
+        </EntityType>
+        <EntityType Name="product_table">
+          <Key>
+            <PropertyRef Name="Pro_id" />
+          </Key>
+          <Property Name="Pro_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pro_details" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pro_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Pro_qty" Type="Int32" />
+          <Property Name="Pro_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cat_Id" Type="Int32" />
+          <NavigationProperty Name="categories_table" Relationship="Self.FK_product_table_categories_table" FromRole="product_table" ToRole="categories_table" />
+          <NavigationProperty Name="order_details" Relationship="Self.FK_order_details_product_table" FromRole="product_table" ToRole="order_details" />
+          <NavigationProperty Name="product_image" Relationship="Self.FK_product_image_product_table" FromRole="product_table" ToRole="product_image" />
+        </EntityType>
+        <EntityType Name="user_table">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="user_type" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="C_order_table" Relationship="Self.FK__order_table_user_table" FromRole="user_table" ToRole="C_order_table" />
+        </EntityType>
+        <Association Name="FK__order_table_user_table">
+          <End Role="user_table" Type="Self.user_table" Multiplicity="0..1" />
+          <End Role="C_order_table" Type="Self.C_order_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_table">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="C_order_table">
+              <PropertyRef Name="U_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_details__order_table">
+          <End Role="C_order_table" Type="Self.C_order_table" Multiplicity="1" />
+          <End Role="order_details" Type="Self.order_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_order_table">
+              <PropertyRef Name="O_id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="O_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_table_categories_table">
+          <End Role="categories_table" Type="Self.categories_table" Multiplicity="0..1" />
+          <End Role="product_table" Type="Self.product_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories_table">
+              <PropertyRef Name="Cat_id" />
+            </Principal>
+            <Dependent Role="product_table">
+              <PropertyRef Name="Cat_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_details_product_table">
+          <End Role="product_table" Type="Self.product_table" Multiplicity="1" />
+          <End Role="order_details" Type="Self.order_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_table">
+              <PropertyRef Name="Pro_id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="P_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_image_product_table">
+          <End Role="product_table" Type="Self.product_table" Multiplicity="1" />
+          <End Role="product_image" Type="Self.product_image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_table">
+              <PropertyRef Name="Pro_id" />
+            </Principal>
+            <Dependent Role="product_image">
+              <PropertyRef Name="Pro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C_order_table" EntityType="Self.C_order_table" />
+          <EntitySet Name="categories_tables" EntityType="Self.categories_table" />
+          <EntitySet Name="order_details" EntityType="Self.order_detail" />
+          <EntitySet Name="product_images" EntityType="Self.product_image" />
+          <EntitySet Name="product_tables" EntityType="Self.product_table" />
+          <EntitySet Name="user_tables" EntityType="Self.user_table" />
+          <AssociationSet Name="FK__order_table_user_table" Association="Self.FK__order_table_user_table">
+            <End Role="user_table" EntitySet="user_tables" />
+            <End Role="C_order_table" EntitySet="C_order_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_details__order_table" Association="Self.FK_order_details__order_table">
+            <End Role="C_order_table" EntitySet="C_order_table" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_table_categories_table" Association="Self.FK_product_table_categories_table">
+            <End Role="categories_table" EntitySet="categories_tables" />
+            <End Role="product_table" EntitySet="product_tables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_details_product_table" Association="Self.FK_order_details_product_table">
+            <End Role="product_table" EntitySet="product_tables" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_image_product_table" Association="Self.FK_product_image_product_table">
+            <End Role="product_table" EntitySet="product_tables" />
+            <End Role="product_image" EntitySet="product_images" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities3">
+          <EntitySetMapping Name="C_order_table">
+            <EntityTypeMapping TypeName="Model.C_order_table">
+              <MappingFragment StoreEntitySet=" order table">
+                <ScalarProperty Name="O_id" ColumnName="O_id" />
+                <ScalarProperty Name="O_date" ColumnName="O_date" />
+                <ScalarProperty Name="O_address" ColumnName="O_address" />
+                <ScalarProperty Name="O_phone" ColumnName="O_phone" />
+                <ScalarProperty Name="O_total" ColumnName="O_total" />
+                <ScalarProperty Name="O_status" ColumnName="O_status" />
+                <ScalarProperty Name="U_id" ColumnName="U_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories_tables">
+            <EntityTypeMapping TypeName="Model.categories_table">
+              <MappingFragment StoreEntitySet="categories table">
+                <ScalarProperty Name="Cat_id" ColumnName="Cat_id" />
+                <ScalarProperty Name="Cat_name" ColumnName="Cat_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_details">
+            <EntityTypeMapping TypeName="Model.order_detail">
+              <MappingFragment StoreEntitySet="order details">
+                <ScalarProperty Name="details_id" ColumnName="details_id" />
+                <ScalarProperty Name="O_id" ColumnName="O_id" />
+                <ScalarProperty Name="P_id" ColumnName="P_id" />
+                <ScalarProperty Name="Order_qty" ColumnName="Order_qty" />
+                <ScalarProperty Name="Order_price" ColumnName="Order_price" />
+                <ScalarProperty Name="Order_total" ColumnName="Order_total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_images">
+            <EntityTypeMapping TypeName="Model.product_image">
+              <MappingFragment StoreEntitySet="product image">
+                <ScalarProperty Name="Img_id" ColumnName="Img_id" />
+                <ScalarProperty Name="Pro_id" ColumnName="Pro_id" />
+                <ScalarProperty Name="Img_path" ColumnName="Img_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_tables">
+            <EntityTypeMapping TypeName="Model.product_table">
+              <MappingFragment StoreEntitySet="product table">
+                <ScalarProperty Name="Pro_id" ColumnName="Pro_id" />
+                <ScalarProperty Name="Pro_details" ColumnName="Pro_details" />
+                <ScalarProperty Name="Pro_price" ColumnName="Pro_price" />
+                <ScalarProperty Name="Pro_qty" ColumnName="Pro_qty" />
+                <ScalarProperty Name="Pro_name" ColumnName="Pro_name" />
+                <ScalarProperty Name="Cat_Id" ColumnName="Cat_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_tables">
+            <EntityTypeMapping TypeName="Model.user_table">
+              <MappingFragment StoreEntitySet="user table">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_address" ColumnName="user_address" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="user_type" ColumnName="user_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

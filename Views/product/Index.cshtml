@@ -1,0 +1,57 @@
+﻿@model IEnumerable<elibrary.product_table>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pro_details)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pro_price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pro_qty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pro_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.categories_table.Cat_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pro_details)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pro_price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pro_qty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pro_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.categories_table.Cat_name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Pro_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Pro_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Pro_id })
+        </td>
+    </tr>
+}
+
+</table>

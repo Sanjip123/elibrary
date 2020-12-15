@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<div class="jumbotron">
+    <h1 style="color:red;">"Welcome to Beady's Bookshop"</h1>
+    <p class="lead"> Beady's book is a popular bookshop across Sydney which sales a varies of books having online shopping facility .</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Signup &raquo;</a></p>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () { 
+        $("#draggable").draggable();
+    });
+</script>
+
+
+
+@{
+    Html.BeginForm("Index", "Home", FormMethod.Get);
+    <input type="text" title="search Term" value="@ViewBag.search_term" name="search_term" />
+    <input class="btn btn-success" type="submit" value="Search" />
+
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2 style="color:blue;">Introduction about bookstore</h2>
+        <p>
+            Beady's book is a popular bookstore across Sydney having ten retail outlets and have the online shopping facility too.You can enjoy reading various kinds of books online through login to your beady book's customer's account or <b>
+                by ordering the book .To learn more visit get more libraries option.
+            </b>'
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2 style="color:blue;">Get more libraries</h2>
+        <p>You can read and order the books you prefer to read through this option.Let's get started.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2 style="color:blue;">Help through contacts </h2>
+        <p>If you have any problems or any confusions to deal with,You can easily contact us in our email provided in this part or the numner that is provided by us here.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
+<div>
+    <div class="col-md-4">
+        <h2 style="color:blue;">feedbacks  </h2>
+        <p>You can provide us with the valuable feedbacks,so that we can further improve our problems and will try to give the best service for our customers</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    </div>
+</div>
+<div>
+    <br />
+    <img src="~/image/1.jpg" alt="Trulli" width="500" height="333">
+    <p> you can find the Love stories books here</p>
+    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Add to Cart &raquo;</a></p>
+
+
+</div>
+<div>
+    </br>
+    <img src="~/image/2.jpg" alt="Trulli" width="500" height="333">
+    <p>You can find the drammatic books here</p>
+    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Add to cart &raquo;</a></p>
+
+</div>
+<div>
+    </br>
+    <img src="~/image/3.jpg" alt="Trulli" width="500" height="333">
+    <p>You can find the science fiction related books here</p>
+    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Add to cart &raquo;</a></p>
+
+</div>
